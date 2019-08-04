@@ -7,6 +7,8 @@ const path = require('path');
 const connection = require('./connection');
 const config = require('./config/configs');
 
+const info = require('../route/info');
+
 class Server {
    constructor() {
     this.app = express();
@@ -16,8 +18,12 @@ class Server {
   }
 
   routes() {
-    // serves files from node_modules.
-    this.app.use(express.static(path.join(__dirname, '../../../../node_modules'), {
+   this.app.use('/', info);
+  }
+
+  middlewares() {
+     // serves files from node_modules.
+     this.app.use(express.static(path.join(__dirname, '../../../../node_modules'), {
       maxAge: 24 * 60 * 60 * 1000
     }));
 
@@ -25,9 +31,6 @@ class Server {
     this.app.use(express.static(path.join(__dirname, '../../../client/'), {
       maxAge: 24 * 60 * 60 * 1000
     }));
-  }
-
-  middlewares() {
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
