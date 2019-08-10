@@ -6,10 +6,7 @@ const controller = new Controller(model);
 router.get('/infos', async (req, res) => {
   try {
     const result = await controller.getAll();
-    return res.status(200).json({
-      no: result.no,
-      result: result.data
-    });
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ err: error.message });
   }
@@ -18,9 +15,7 @@ router.get('/infos', async (req, res) => {
 router.get('/info/:id', async (req, res) => {
   try {
     const result = await controller.get(req.params.id);
-    return res.status(200).json({
-      result: result.data
-    }); 
+    return res.status(200).json(result); 
   } catch (error) {
     return res.status(500).json({ err: error.message });
   }
@@ -29,10 +24,7 @@ router.get('/info/:id', async (req, res) => {
 router.post('/info', async (req, res) => {
   try{
     const result = await controller.create(req.body);
-    return res.status(201).json({
-      msg: result.msg,
-      result: result.data
-    });
+    return res.status(201).json(result);
   } catch(error) {
     return res.status(500).json({ err: error.message });
   }
@@ -41,10 +33,25 @@ router.post('/info', async (req, res) => {
 router.put('/info/:id', async (req, res) => {
   try {
     const result = await controller.update(req.params.id, req.body);
-    return res.status(201).json({
-      msg: result.msg,
-      result: result.data
-    });
+    return res.status(201).json(result);
+  } catch (error) {
+    return res.status(500).json({ err: error.message });
+  }
+});
+router.patch('/info/:id/:priority', async(req, res) => {
+  try {
+    const result = await controller.changePriority(req.params.id, req.params.priority);
+    return res.status(200).json(result);;
+  } catch (error) {
+    return res.status(500).json({ err: error.message });
+  }
+  
+});
+
+router.patch('/info/:id', async(req, res) => {
+  try {
+    const result = await controller.changeAvailability(req.params.id);
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ err: error.message });
   }
@@ -53,9 +60,7 @@ router.put('/info/:id', async (req, res) => {
 router.delete('/info/:id', async (req, res) => {
   try {
     const result = await controller.delete(req.params.id);
-    return res.status(201).json({
-      msg: result.msg,
-    });
+    return res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({ err: error.message });
   }
