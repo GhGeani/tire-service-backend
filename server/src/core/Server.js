@@ -9,6 +9,7 @@ const connection = require('./connection');
 const config = require('./config/configs');
 
 const info = require('../route/info');
+const announce = require('../route/announce');
 
 class Server {
    constructor() {
@@ -20,6 +21,7 @@ class Server {
 
   routes() {
    this.app.use('/', info);
+   this.app.use('/', announce);
   }
 
   middlewares() {
