@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const morgan = require('morgan')
 
 const connection = require('./connection');
 const config = require('./config/configs');
@@ -34,6 +35,7 @@ class Server {
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
+    this.app.use(morgan('dev'));
   }
 
   start() {
