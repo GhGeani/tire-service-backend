@@ -6,7 +6,7 @@ module.exports = {
   database: {
     dbname: 'body_shop',
     collections: {
-      article: 'article',
+      item: 'item',
       info: 'info',
       announce: 'announce'
     }
