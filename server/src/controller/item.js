@@ -1,6 +1,7 @@
 class itemController {
-  constructor(model) {
+  constructor(model, fs) {
     this.item = model;
+    this.fs = fs;
     this.limit = 10;
   }
 
@@ -53,9 +54,14 @@ class itemController {
   }
 
   async delete(_id){
-    const item = await this.item.findOneAndDelete({ _id });
+    const item = await this.item.findById(_id);
     if (item) {
-      item.remove();
+      if(item.images.length > 0) {
+        for(let path in item.images){
+          this.fs.unlinkSync(item.images[path]);
+        }
+      }
+      await item.remove();
       return { msg: 'Item deleted' };
     }
     throw new Error(`Couldn't delete inexistent item ${_id}`);
