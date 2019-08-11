@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const Controller = require('../controller/announce')
 const model = require('../model/announce');
+const _isAuth = require('../middleware/_isAuth');
 
 const controller = new Controller(model);
 
@@ -23,7 +24,7 @@ router.get('/announce/:id', async (req, res) => {
   }
 });
 
-router.post('/announce', async (req, res) => {
+router.post('/announce', _isAuth, async (req, res) => {
   try {
     const result = await controller.create(req.body);
     return res.status(201).json(result);
