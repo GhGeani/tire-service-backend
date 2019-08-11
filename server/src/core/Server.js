@@ -10,6 +10,8 @@ const config = require('./config/configs');
 
 const info = require('../route/info');
 const announce = require('../route/announce');
+const item = require('../route/item');
+const user = require('../route/user');
 
 class Server {
    constructor() {
@@ -22,6 +24,8 @@ class Server {
   routes() {
    this.app.use('/', info);
    this.app.use('/', announce);
+   this.app.use('/', item);
+   this.app.use('/', user);
   }
 
   middlewares() {
