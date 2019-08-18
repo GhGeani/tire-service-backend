@@ -6,9 +6,10 @@ const controller = new Controller(model);
 router.get('/infos', async (req, res) => {
   try {
     const result = await controller.getAll();
-    return res.status(200).json(result);
+    if(result.data.length > 0) return res.status(200).json(result); 
+    return res.status(204).end();
   } catch (error) {
-    return res.status(500).json({ err: error.message });
+    return res.status(500).end();
   }
 });
 
@@ -17,7 +18,7 @@ router.get('/info/:id', async (req, res) => {
     const result = await controller.get(req.params.id);
     return res.status(200).json(result); 
   } catch (error) {
-    return res.status(500).json({ err: error.message });
+    return res.status(404).end();
   }
 });
 

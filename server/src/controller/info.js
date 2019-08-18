@@ -8,22 +8,14 @@ class infoController {
       { $match: {  } },
       { $sort: { priority: -1 } },
     ]);
-    if(result.length > 0) 
-    return {
-      no: result.length,
-      data: result 
-    };
-    throw new Error('No info avalible yet');
+    if(result) return { data: result };
+    throw new Error;
   }
 
   async get(_id) {
     const result = await this.info.findById(_id);
-    if(result) {
-      return {
-        data: result 
-      };
-    }
-    throw new Error('Information not found');
+    if(result) return { data: result };
+    throw new Error;
   }
   
   async create(info) {

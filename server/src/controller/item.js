@@ -6,25 +6,19 @@ class itemController {
   }
 
   async getAll(page) {
-    const result = await this.item.aggregate([
-      { $match: { } },
-      { $sort: { date: -1 } },
-      { $skip: this.limit * page },
-      { $limit: this.limit },
-    ]);
-    if(result)
-    return { page: page, data: result };
-    throw new Error('No items found');
+    const result = await this.item
+      .find({})
+      .sort([['_id', -1]])
+      .skip(this.limit * (--page))
+      .limit(this.limit);
+    if(result) return { page: page, data: result };
+    throw new Error;
   }
 
   async get(_id){
     const result = await this.item.findById(_id);
-    if(result) {
-      return {
-        data: result 
-      };
-    }
-    throw new Error('Item not found');
+    if(result) return { data: result };
+    throw new Error;
   }
 
   async create(item) {

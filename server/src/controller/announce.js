@@ -7,24 +7,22 @@ class AnnounceController {
   async getAll(page) {
     const result = await this.announce
       .find({})
-      .sort([['date', -1]])
+      .sort([['_id', -1]])
       .skip(this.limit * (--page))
       .limit(this.limit);
-    if(result.length > 0 ) 
     return { currpage: page, data: result };
-    throw new Error('No announces posted.')
   }
 
   async get(_id) {
     const result = await this.announce.findById(_id);
     if(result) return { data: result }
-    throw new Error('Cannot get inexistent announce');
+    throw new Error;
   }
   
   async create(announce) {
     const result = await new this.announce(announce).save();
     if(result) return { msg: 'Announce created successiful', data: result };
-    throw new Error('Cannot create this announce.')
+    throw new Error;
   }
 
   async update(_id, updates) {

@@ -3,11 +3,12 @@ const config = require('../core/config/configs');
 
 const announceSchema = mongoose.Schema({
   description: String,
-  date: Date
+  date: String
 });
 
 announceSchema.pre('save', function(next) {
-  this.date = new Date();
+  const d = new Date().toLocaleDateString('ro-RO', {year: 'numeric', month: 'long', day: 'numeric' })
+  this.date = d
   next();
 });
 

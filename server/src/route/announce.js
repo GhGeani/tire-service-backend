@@ -9,7 +9,9 @@ const controller = new Controller(model);
 router.get('/announces', async (req, res) => {
   try {
     const result = await controller.getAll(req.query.page);
-    return res.status(200).json(result);
+    if(result.data.length > 0) 
+      return res.status(200).json(result);
+    return res.status(204).end();
   } catch (error) {
     return res.status(500).json({err: error.message});
   }
@@ -18,9 +20,9 @@ router.get('/announces', async (req, res) => {
 router.get('/announce/:id', async (req, res) => {
   try {
     const result = await controller.get(req.params.id);
-    return res.status(200).json(result);
+    if(result) return res.status(200).json(result); 
   } catch (error) {
-    return res.status(500).json({err: error.message});
+    return res.status(404).end();
   }
 });
 
