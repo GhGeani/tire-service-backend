@@ -9,12 +9,12 @@ const controller = new Controller(model);
 router.get('/announces', async (req, res) => {
   try {
     const result = await controller.getAll(req.query.page);
-    if(result.data.length > 0) 
+    if(result.length > 0) 
       return res.status(200).json(result);
     return res.status(204).end();
   } catch (error) {
-    return res.status(500).json({err: error.message});
-  }
+      return res.status(500).end();
+    }
 });
 
 router.get('/announce/:id', async (req, res) => {
@@ -31,25 +31,27 @@ router.post('/announce', _isAuth, async (req, res) => {
     const result = await controller.create(req.body);
     return res.status(201).json(result);
   } catch (error) {
-    return res.status(500).json({ err: error.message });
+    return res.status(500).end();
   }
 });
 
 router.put('/announce/:id', async (req, res) => {
   try {
     const result = await controller.update(req.params.id, req.body);
-    return res.status(201).json(result);
+    if(result) return res.status(201).json(result);
+    return res.status(404).end();
   } catch (error) {
-    return res.status(500).json({err: error.message});
+    return res.status(500).end();
   }
 });
 
 router.delete('/announce/:id', async (req, res) => {
   try {
     const result = await controller.delete(req.params.id);
-    return res.status(200).json(result);
+    if(result) return res.status(200);
+    return res.status(404).end();
   } catch (error) {
-    return res.status(500).json({err: error.message});
+    return res.status(500).end();
   }
 });
 

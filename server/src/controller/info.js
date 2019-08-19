@@ -8,13 +8,13 @@ class infoController {
       { $match: {  } },
       { $sort: { priority: -1 } },
     ]);
-    if(result) return { data: result };
+    if(result) return result;
     throw new Error;
   }
 
   async get(_id) {
     const result = await this.info.findById(_id);
-    if(result) return { data: result };
+    if(result) return result;
     throw new Error;
   }
   
@@ -34,21 +34,16 @@ class infoController {
       info,
       { new: true }
       );
-    if(result) {
-      return {
-        msg: 'Info updated successfully',
-        data: result
-      };
-    }
-    throw new Error(`Couldn't update inexistent info ${_id}`);
+    if(result) return result;
+    throw new Error;
   }
   async delete(_id){
     const info = await this.info.findOneAndDelete({ _id });
     if (info) {
       info.remove();
-      return { msg: 'Info deleted' };
+      return true;
     }
-    throw new Error(`Couldn't delete inexistent info ${_id}`);
+    throw new Error;
   }
   async changePriority(_id, priority) {
     const result = await this.info.findOneAndUpdate(

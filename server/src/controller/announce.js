@@ -5,23 +5,25 @@ class AnnounceController {
   }
 
   async getAll(page) {
+    const length = await this.announce
+      .countDocuments({});
     const result = await this.announce
       .find({})
       .sort([['_id', -1]])
       .skip(this.limit * (--page))
       .limit(this.limit);
-    return { currpage: page, data: result };
+    return { length, result };
   }
 
   async get(_id) {
     const result = await this.announce.findById(_id);
-    if(result) return { data: result }
+    if(result) return result
     throw new Error;
   }
   
   async create(announce) {
     const result = await new this.announce(announce).save();
-    if(result) return { msg: 'Announce created successiful', data: result };
+    if(result) return result;
     throw new Error;
   }
 
@@ -31,16 +33,14 @@ class AnnounceController {
       updates,
       { new: true },
       );
-    if(result)
-    return { msg: 'Announce updated.', data: result };
-    throw new Error('Cannot update inexistent announce.');
+    if(result) return result;
+    throw new Error;
   }
 
   async delete(_id) {
     const result = await this.announce.findOneAndDelete(_id);
-    if(result)
-    return { msg: 'Announce deleted.' };
-    throw new Error('Cannot delete inexistent announce.');
+    if(result) return true;
+    throw new Error;
   }
 
 }
