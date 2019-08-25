@@ -6,13 +6,14 @@ class itemController {
   }
 
   async getAll(page) {
+    const length = await this.item
+    .countDocuments({});
     const result = await this.item
-      .find({})
-      .sort([['_id', -1]])
-      .skip(this.limit * (--page))
-      .limit(this.limit);
-    if(result) return { page: page, data: result };
-    throw new Error;
+    .find({})
+    .sort([['_id', -1]])
+    .skip(this.limit * (--page))
+    .limit(this.limit);
+    return { length, result };
   }
 
   async get(_id){
@@ -23,13 +24,7 @@ class itemController {
 
   async create(item) {
     const result = await new this.item(item).save();
-    if(result) {
-      return{
-        msg: 'Item posted successfully',
-        data: result
-      };
-    }
-    throw new Error('This item can be saved');
+    if(result) return result;
   }
 
   async update(_id, item){

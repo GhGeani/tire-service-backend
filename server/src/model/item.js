@@ -8,7 +8,7 @@ const itemSchema = mongoose.Schema({
   description: String, 
   avalible: Boolean,
   date: String,
-  images: [String]
+  images: Array
 });
 
 itemSchema.pre('save', function(next) {
