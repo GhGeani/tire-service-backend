@@ -8,13 +8,14 @@ const itemSchema = mongoose.Schema({
   description: String, 
   avalible: Boolean,
   date: String,
-  images: Array
+  images: Array,
+  section: Array
 });
 
-itemSchema.pre('save', function(next) {
-  const d = new Date().toLocaleDateString('ro-RO', {year: 'numeric', month: 'long', day: 'numeric' })
-  this.date = d
-  next();
-});
+// itemSchema.pre('save', function(next) {
+//   const d = new Date().toLocaleDateString('ro-RO', {year: 'numeric', month: 'long', day: 'numeric' })
+//   this.date = d
+//   next();
+// });
 
 module.exports = itemModel = mongoose.model(config.database.collections.item, itemSchema);

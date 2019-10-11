@@ -4,13 +4,13 @@ class userController {
   }
 
   async login(user) {
-    const result = await this.user.findOne({ email: user.email });
+    const result = await this.user.findOne({ username: user.username });
     if(result) {
       const passMatch = await this.user.comparePassword(user.password, result.password);
       if(passMatch) return { correct: true, user: result };
-      else throw new Error('Invalid password');
+      else throw new Error('Parola este gresită');
     }
-    throw new Error('Incorrect credentials');
+    throw new Error('Contul nu există');
   }
 
   async register(creds) {

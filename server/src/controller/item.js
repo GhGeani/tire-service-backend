@@ -6,19 +6,34 @@ class itemController {
   }
 
   async getAll(page) {
-    const length = await this.item
-    .countDocuments({});
+    // const length = await this.item
+    // .countDocuments({});
     const result = await this.item
     .find({})
     .sort([['_id', -1]])
-    .skip(this.limit * (--page))
-    .limit(this.limit);
-    return { length, result };
+    // .skip(this.limit * (--page))
+    // .limit(this.limit);
+    return result
+  }
+
+  async search(page, text) {
+    let vals = [];
+    if (text) {
+      vals = text.split(',').map(val => new RegExp(val, 'i'));
+    }
+    // const length = await this.item
+    // .countDocuments({});
+    const result = await this.item
+    .find({ name : { $in: vals } })
+    .sort([['_id', -1]])
+    // .skip(this.limit * (--page))
+    // .limit(this.limit);
+    return result;
   }
 
   async get(_id){
     const result = await this.item.findById(_id);
-    if(result) return { data: result };
+    if(result) return result
     throw new Error;
   }
 
@@ -45,9 +60,10 @@ class itemController {
   async delete(_id){
     const item = await this.item.findById(_id);
     if (item) {
+      console.log(item);
       if(item.images.length > 0) {
-        for(let path in item.images){
-          this.fs.unlinkSync(item.images[path]);
+        for(let index in item.images){
+          this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${item.images[index]}`));
         }
       }
       await item.remove();

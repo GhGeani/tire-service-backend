@@ -3,7 +3,7 @@ const config = require('../core/config/configs');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
-  email: String,
+  username: String,
   password: String
 });
 

@@ -6,11 +6,10 @@ const announceSchema = mongoose.Schema({
   date: String
 });
 
-announceSchema.pre('save', function(next) {
-  const d = new Date().toLocaleDateString('ro-RO', {year: 'numeric', month: 'long', day: 'numeric' })
-  this.date = d
-  next();
-});
+// announceSchema.pre('save', function(next) {
+//   this.date = new Date().toLocaleDateString('ro-RO', {year: 'numeric', month: 'long', day: 'numeric' })
+//   next();
+// });
 
 const announceModel = mongoose.model(config.database.collections.announce, announceSchema);
 

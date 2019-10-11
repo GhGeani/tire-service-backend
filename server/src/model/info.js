@@ -7,7 +7,8 @@ const infoSchema = mongoose.Schema({
   name: String,
   description: String, 
   priority: Number,
-  avalible: Boolean
+  avalible: Boolean,
+  img: String
 });
 
 module.exports = itemModel = mongoose.model(config.database.collections.info, infoSchema);

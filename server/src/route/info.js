@@ -2,6 +2,7 @@ const router = require('express').Router();
 const model = require('../model/info');
 const Controller = require('../controller/info');
 const controller = new Controller(model);
+const upload = require('../utils/storage');
 
 router.get('/infos', async (req, res) => {
   try {
@@ -22,9 +23,13 @@ router.get('/info/:id', async (req, res) => {
   }
 });
 
-router.post('/info', async (req, res) => {
+router.post('/info', upload.single('file'), async (req, res) => {
   try{
-    const result = await controller.create(req.body);
+    let service = req.body;
+    if(req.file) {
+      service.img = req.file.originalname;
+    }
+    const result = await controller.create(service);
     return res.status(201).json(result);
   } catch(error) {
     return res.status(500).json({ err: error.message });

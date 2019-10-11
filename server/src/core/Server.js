@@ -12,6 +12,8 @@ const info = require('../route/info');
 const announce = require('../route/announce');
 const item = require('../route/item');
 const user = require('../route/user');
+const files = require('../route/files');
+const slide = require('../route/slide');
 
 class Server {
    constructor() {
@@ -26,6 +28,8 @@ class Server {
    this.app.use('/', announce);
    this.app.use('/', item);
    this.app.use('/', user);
+   this.app.use('/', slide);
+   this.app.use('/', files);
   }
 
   middlewares() {

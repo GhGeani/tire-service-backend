@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Controller = require('../controller/announce')
 const model = require('../model/announce');
-const _isAuth = require('../middleware/_isAuth');
+const _isAuth = require('../utils/_isAuth');
 
 const controller = new Controller(model);
 

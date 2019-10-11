@@ -7,19 +7,20 @@ const Controller = require('../controller/user');
 
 const controller = new Controller(model);
 
-router.post('/user/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
+    console.log(req.body);
     const { correct, user} = await controller.login(req.body);
     if(correct) {
-      const token = jwt.sign({ email: user.email }, config.secret.key);
-      res.status(200).json({ token });
+      const token = jwt.sign({ username: user.username }, config.secret.key);
+      return res.status(200).json({ token });
     }
   } catch (error) {
     res.status(500).json({ err: error.message });
   }
 });
 
-router.post('/user/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const result = await controller.register(req.body);
     res.status(200).json(result);

@@ -9,7 +9,8 @@ module.exports = {
       item: 'item',
       info: 'info',
       announce: 'announce',
-      user: 'user'
+      user: 'user',
+      slide: 'slide'
     }
   },
   secret: {
