@@ -23,15 +23,15 @@
     "helmet": "3.21.1",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.6.7",
-    "multer": "1.4.2"
+    "multer": "1.4.2",
+    "morgan": "1.9.1",
+    "nodemon": "1.19.1"
   },
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-plugin-import": "2.18.2",
     "mocha": "6.2.0",
-    "morgan": "1.9.1",
-    "nodemon": "1.19.1",
     "nyc": "14.1.1",
     "supertest": "4.0.2"
   }
