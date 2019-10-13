@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan')
+const helmet = require('helmet');
+const compression = require('compression');
 
 const connection = require('./connection');
 const config = require('./config/configs');
@@ -39,11 +41,14 @@ class Server {
     }));
 
     // serve static files from client.
+    this.app.use(compression());
+    this.app.use(helmet());
     this.app.use(express.static(path.join('/files', __dirname, '../../../public/uploads')));
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
     this.app.use(morgan('dev'));
+
   }
 
   start() {

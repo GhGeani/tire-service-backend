@@ -1,8 +1,10 @@
 const router = require('express').Router();
+const fs = require('fs');
 const model = require('../model/info');
 const Controller = require('../controller/info');
-const controller = new Controller(model);
+const controller = new Controller(model, fs);
 const upload = require('../utils/storage');
+
 
 router.get('/infos', async (req, res) => {
   try {

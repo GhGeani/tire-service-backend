@@ -1,6 +1,7 @@
 class infoController {
-  constructor(model) {
+  constructor(model, fs) {
     this.info = model;
+    this.fs = fs;
   }
   async getAll() {
     // const result = await this.info.find({});
@@ -36,6 +37,9 @@ class infoController {
   async delete(_id){
     const info = await this.info.findOneAndDelete({ _id });
     if (info) {
+      if(info.img) {
+        this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${info.img}`));
+      }
       info.remove();
       return true;
     }
