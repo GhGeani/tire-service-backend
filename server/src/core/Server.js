@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const helmet = require('helmet');
 const compression = require('compression');
 
@@ -47,7 +47,7 @@ class Server {
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
-    this.app.use(morgan('dev'));
+    // this.app.use(morgan('dev'));
 
   }
 
