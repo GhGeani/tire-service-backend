@@ -48,7 +48,7 @@ router.put('/announce/:id', async (req, res) => {
 router.delete('/announce/:id', async (req, res) => {
   try {
     const result = await controller.delete(req.params.id);
-    if(result) return res.status(200);
+    if(result) return res.status(200).end();
     return res.status(404).end();
   } catch (error) {
     return res.status(500).end();

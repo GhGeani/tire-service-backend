@@ -20,12 +20,8 @@ class infoController {
   
   async create(info) {
     const result = await new this.info(info).save();
-    if(result) {
-      return{
-        msg: 'Info created successfully',
-        data: result
-      };
-    }
+    if(result) 
+      return result;
     throw new Error('This information can be saved');
   }
   async update(_id, info){
