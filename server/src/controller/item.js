@@ -60,7 +60,6 @@ class itemController {
   async delete(_id){
     const item = await this.item.findById(_id);
     if (item) {
-      console.log(item);
       if(item.images.length > 0) {
         for(let index in item.images){
           this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${item.images[index]}`));

@@ -9,7 +9,6 @@ const controller = new Controller(model);
 
 router.post('/login', async (req, res) => {
   try {
-    console.log(req.body);
     const { correct, user} = await controller.login(req.body);
     if(correct) {
       const token = jwt.sign({ username: user.username }, config.secret.key);

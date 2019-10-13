@@ -38,7 +38,6 @@ router.get('/item/:id', async (req, res) => {
 
 router.post('/item', upload.any(), async (req, res) => {
   try{
-    console.log(req.files);
     const item = req.body;
     item.images = [];
     await req.files.forEach(element => {
