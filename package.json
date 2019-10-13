@@ -8,7 +8,8 @@
   "description": "App created for a body shop ",
   "main": "server/main.js",
   "scripts": {
-    "start": "nodemon server/main.js"
+    "dev": "nodemon server/main.js",
+    "start": "node server/main.js"
   },
   "author": "Gheghe Geani",
   "license": "ISC",
