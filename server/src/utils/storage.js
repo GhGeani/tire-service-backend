@@ -2,11 +2,7 @@ const aws = require( 'aws-sdk' );
 const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 
-const s3 = new aws.S3({
-  accessKeyId: 'AKIAJVT5YZY2VTW6FCPQ',
-  secretAccessKey: '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',
-  Bucket: 'tireshopimages'
- });
+const s3 = new aws.S3();
 
 const upload = multer({
   storage: multerS3({
