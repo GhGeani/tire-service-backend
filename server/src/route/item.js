@@ -2,7 +2,7 @@ const router = require('express').Router();
 const model = require('../model/item');
 const Controller = require('../controller/item');
 const fs = require('fs');
-const upload = require('../utils/storage');
+const storage = require('../utils/storage');
 
 
 const controller = new Controller(model, fs);
@@ -36,7 +36,7 @@ router.get('/item/:id', async (req, res) => {
   }
 });
 
-router.post('/item', upload.any(), async (req, res) => {
+router.post('/item', storage.upload.any(), async (req, res) => {
   try{
     const item = req.body;
     item.images = [];
@@ -70,6 +70,7 @@ router.patch('/item/:id', async(req, res) => {
 
 router.delete('/item/:id', async (req, res) => {
   try {
+    storage.remove(req.params.id)
     const result = await controller.delete(req.params.id);
     return res.status(200).json(result);
   } catch (error) {

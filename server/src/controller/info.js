@@ -1,7 +1,8 @@
+const storage = require('../utils/storage');
+
 class infoController {
-  constructor(model, fs) {
+  constructor(model) {
     this.info = model;
-    this.fs = fs;
   }
   async getAll() {
     // const result = await this.info.find({});
@@ -38,9 +39,9 @@ class infoController {
     const info = await this.info.findOneAndDelete({ _id });
     if (info) {
       if(info.img) {
-        this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${info.img}`));
+        storage.remove(info.img);
       }
-      info.remove();
+      await info.remove();
       return true;
     }
     throw new Error;

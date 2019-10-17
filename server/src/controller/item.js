@@ -1,7 +1,8 @@
+const storage = require('../utils/storage');
+
 class itemController {
-  constructor(model, fs) {
+  constructor(model) {
     this.item = model;
-    this.fs = fs;
     this.limit = 10;
   }
 
@@ -62,7 +63,7 @@ class itemController {
     if (item) {
       if(item.images.length > 0) {
         for(let index in item.images){
-          this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${item.images[index]}`));
+          storage.remove(item.images[index]);
         }
       }
       await item.remove();

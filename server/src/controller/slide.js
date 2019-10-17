@@ -1,7 +1,8 @@
+const storage = require('../utils/storage');
+
 class slideController {
-  constructor(model, fs) {
+  constructor(model) {
     this.slide = model;
-    this.fs = fs;
   }
 
   async getAll() {
@@ -19,7 +20,7 @@ class slideController {
   async delete(_id){
     const slide = await this.slide.findById(_id);
     if (slide) {
-      this.fs.unlinkSync(require('path').join(__dirname , `../../../public/uploads/${slide.img}`));
+      storage.remove(slide.img);
       await slide.remove();
       return { msg: 'Item deleted' };
     }

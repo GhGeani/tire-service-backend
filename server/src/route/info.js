@@ -3,7 +3,7 @@ const fs = require('fs');
 const model = require('../model/info');
 const Controller = require('../controller/info');
 const controller = new Controller(model, fs);
-const upload = require('../utils/storage');
+const storage = require('../utils/storage');
 
 
 router.get('/infos', async (req, res) => {
@@ -25,7 +25,7 @@ router.get('/info/:id', async (req, res) => {
   }
 });
 
-router.post('/info', upload.single('file'), async (req, res) => {
+router.post('/info', storage.upload.single('file'), async (req, res) => {
   try{
     let service = req.body;
     if(req.file) {
@@ -68,6 +68,7 @@ router.patch('/info/:id', async(req, res) => {
 
 router.delete('/info/:id', async (req, res) => {
   try {
+    storage.remove(req.params.id)
     const result = await controller.delete(req.params.id);
     if(result) res.status(200).end();
   } catch (error) {

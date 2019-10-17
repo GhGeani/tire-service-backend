@@ -2,7 +2,7 @@ const router = require('express').Router();
 const model = require('../model/slide');
 const Controller = require('../controller/slide');
 const fs = require('fs');
-const upload = require('../utils/storage');
+const storage = require('../utils/storage');
 
 const controller = new Controller(model, fs);
 
@@ -16,7 +16,7 @@ router.get('/slides', async (req, res) => {
   }
 });
 
-router.post('/slide', upload.single('file'), async (req, res) => {
+router.post('/slide', storage.upload.single('file'), async (req, res) => {
   try{
     const item = req.body;
     item.img = req.file.originalname
@@ -29,6 +29,7 @@ router.post('/slide', upload.single('file'), async (req, res) => {
 
 router.delete('/slide/:id', async (req, res) => {
   try {
+    storage.remove(req.params.id);
     const result = await controller.delete(req.params.id);
     return res.status(200).json(result);
   } catch (error) {
