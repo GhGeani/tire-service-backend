@@ -3,8 +3,8 @@ const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 
 const s3 = new aws.S3({
-  accessKeyId: 'AKIAJP2QCJKIGB3Q3HPQ',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIAJVT5YZY2VTW6FCPQ',
+  secretAccessKey: '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',
   Bucket: 'tireshopimages'
  });
 
