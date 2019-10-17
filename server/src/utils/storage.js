@@ -2,7 +2,11 @@ const aws = require( 'aws-sdk' );
 const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 
-const s3 = new aws.S3();
+const s3 = new aws.S3({
+  S3_KEY: process.env.S3_KEY,
+  S3_SECRET: process.env.S3_SECRET,
+  S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+});
 
 const upload = multer({
   storage: multerS3({
