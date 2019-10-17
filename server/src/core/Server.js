@@ -13,7 +13,6 @@ const info = require('../route/info');
 const announce = require('../route/announce');
 const item = require('../route/item');
 const user = require('../route/user');
-const files = require('../route/files');
 const slide = require('../route/slide');
 
 class Server {
@@ -42,7 +41,6 @@ class Server {
     // serve static files from client.
     this.app.use(compression());
     this.app.use(helmet());
-    this.app.use(express.static(path.join('/files', __dirname, '../../../public/uploads')));
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
