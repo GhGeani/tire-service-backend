@@ -23,7 +23,7 @@ const upload = multer({
 
 const remove = (key) => {
   s3.deleteObject({
-    Bucket: 'tireshopimages',
+    Bucket: process.env.S3_BUCKET_NAME,
     Key: key
   }, function(err, data){})
 }
