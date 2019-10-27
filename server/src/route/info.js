@@ -28,8 +28,8 @@ router.get('/info/:id', async (req, res) => {
 router.post('/info', storage.upload(500, 300), async (req, res) => {
   try{
     let service = req.body;
-    if(req.file) {
-      service.img = req.file.originalname;
+    if(req.files) {
+      service.img = req.files[0].originalname;
     }
     const result = await controller.create(service);
     return res.status(201).json(result);
