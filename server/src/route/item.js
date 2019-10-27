@@ -36,7 +36,7 @@ router.get('/item/:id', async (req, res) => {
   }
 });
 
-router.post('/item', storage.upload.any(), async (req, res) => {
+router.post('/item', storage.upload(200, 200), async (req, res) => {
   try{
     const item = req.body;
     item.images = [];
