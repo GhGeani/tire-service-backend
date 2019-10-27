@@ -2,7 +2,7 @@ const aws = require( 'aws-sdk' );
 const multerS3 = require('multer-sharp-s3');
 const multer = require('multer');
 
-const sharp = require('sharp');
+const storage = multerS3(options);
 
 
 const s3 = new aws.S3({
@@ -12,7 +12,7 @@ const s3 = new aws.S3({
 
 const upload = function(width, height) {
   return multer({
-    storage: multerS3({
+    storage: gcsSharp({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
       key: function (req, file, cb) {
