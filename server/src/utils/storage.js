@@ -28,7 +28,6 @@ const upload = function(width, height) {
           cb(null, sharp()
           .resize(width, height)
           .composite([{ input: file.originalname, gravity: 'southeast' }])
-          .webp( { quality: 90 } )
           )
         }
       }]
