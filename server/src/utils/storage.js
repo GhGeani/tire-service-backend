@@ -30,7 +30,7 @@ const upload = function(width, height) {
           cb(null, file.originalname)
         },
         transform: function (req, file, cb) {
-          cb(null, sharp().webp())
+          cb(null, sharp().jpg())
         }
       }, {
         id: 'thumbnail',
@@ -38,7 +38,7 @@ const upload = function(width, height) {
           cb(null, file.originalname)
         },
         transform: function (req, file, cb) {
-          cb(null, sharp().resize(width, height).webp())
+          cb(null, sharp().resize(width, height).jpg())
         }
       }]
     }),
