@@ -2,24 +2,48 @@ const aws = require( 'aws-sdk' );
 const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 
+const sharp = require('sharp');
+
+
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.S3_BUCKET_NAME,
-    metadata: function (req, file, cb) {
-    cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-    cb(null, file.originalname)
-    }
-  }),
-  // limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
-})
+const upload = function(width, height) {
+  return multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.S3_BUCKET_NAME,
+      // metadata: function (req, file, cb) {
+      // cb(null, {fieldName: file.fieldname});
+      // },
+      // key: function (req, file, cb) {
+      // cb(null, file.originalname)
+      // }
+      shouldTransform: function (req, file, cb) {
+        cb(null, /^image/i.test(file.mimetype))
+      },
+      transforms: [{
+        id: 'original',
+        key: function (req, file, cb) {
+          cb(null, file.originalname)
+        },
+        transform: function (req, file, cb) {
+          cb(null, sharp().webp())
+        }
+      }, {
+        id: 'thumbnail',
+        key: function (req, file, cb) {
+          cb(null, file.originalname)
+        },
+        transform: function (req, file, cb) {
+          cb(null, sharp().resize(width, height).webp())
+        }
+      }]
+    }),
+  }).any()
+} 
 
 const remove = (key) => {
   s3.deleteObject({

@@ -16,7 +16,7 @@ router.get('/slides', async (req, res) => {
   }
 });
 
-router.post('/slide', storage.upload.single('file'), async (req, res) => {
+router.post('/slide', storage.upload(600, 800), async (req, res) => {
   try{
     const item = req.body;
     item.img = req.file.originalname
