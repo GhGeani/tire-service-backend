@@ -15,19 +15,20 @@ const upload = function(width, height) {
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
-     
       shouldTransform: function (req, file, cb) {
         cb(null, /^image/i.test(file.mimetype))
       },
+      key: function (req, file, cb) {
+        cb(null, file.originalname)
+      },
       transforms: [{
         id: 'original',
-        key: function (req, file, cb) {
-          cb(null, file.originalname)
-        },
         transform: function (req, file, cb) {
           cb(null, sharp(file.originalname)
           .resize(width, height)
-          .max()
+          .jpeg({ progressive: true, force: false })
+          .png({ progressive: true, force: false })
+          .jpg({ progressive: true, force: false })
           )
         }
       }]
