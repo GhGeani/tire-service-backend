@@ -25,9 +25,9 @@ const upload = function(width, height) {
           cb(null, file.originalname)
         },
         transform: function (req, file, cb) {
-          cb(null, sharp()
+          cb(null, sharp(file.originalname)
           .resize(width, height)
-          .composite([{ input: file.originalname, gravity: 'southeast' }])
+          .max()
           )
         }
       }]
