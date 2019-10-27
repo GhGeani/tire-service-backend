@@ -1,5 +1,5 @@
 const aws = require( 'aws-sdk' );
-const multerS3 = require( 'multer-s3' );
+const multerS3 = require('multer-sharp-s3');
 const multer = require('multer');
 
 const sharp = require('sharp');
@@ -15,24 +15,14 @@ const upload = function(width, height) {
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
-      shouldTransform: function (req, file, cb) {
-        cb(null, /^image/i.test(file.mimetype))
-      },
       key: function (req, file, cb) {
         cb(null, file.originalname)
       },
-      transforms: [{
-        id: 'original',
-        transform: function (req, file, cb) {
-          cb(null, sharp(file.originalname)
-          .resize(width, height)
-          .jpeg({ progressive: true, force: false })
-          .png({ progressive: true, force: false })
-          .jpg({ progressive: true, force: false })
-          )
-        }
-      }]
-    }),
+      resize: {
+        width,
+        height
+      }
+    })
   }).any()
 } 
 
