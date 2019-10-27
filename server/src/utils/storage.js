@@ -15,20 +15,20 @@ const upload = function(width, height) {
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
-      metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-      },
-      key: function (req, file, cb) {
-      cb(null, file.originalname)
-      },
+     
       shouldTransform: function (req, file, cb) {
         cb(null, /^image/i.test(file.mimetype))
       },
       transforms: [{
         id: 'original',
+        key: function (req, file, cb) {
+          cb(null, file.originalname)
+        },
         transform: function (req, file, cb) {
           cb(null, sharp()
           .resize(width, height)
+          .composite([{ input: file.originalname, gravity: 'southeast' }])
+          .webp( { quality: 90 } )
           )
         }
       }]
