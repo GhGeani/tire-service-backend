@@ -17,17 +17,17 @@ const upload = function(width, height) {
       bucket: process.env.S3_BUCKET_NAME,
       contentType: multerS3.AUTO_CONTENT_TYPE,
 
-      key: function (req, file, cb) {
-        cb(null, file.originalname)
-      },
-
       shouldTransform: function(req, file, cb) {
         cb(null, /^image/i.test(file.mimetype));
       },
 
       transforms: [{
+
+        key: function (req, file, cb) {
+          cb(null, file.originalname)
+        },
+
         transform: function(req, file, cb) {
-          //Perform desired transformations
           cb(
             null,
             sharp()
