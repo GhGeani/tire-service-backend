@@ -10,26 +10,18 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-const upload = function(width, height) {
+const upload = () => {
   return multer({
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
-      transforms: () => sharp().resize(width, height)
-      .max()
-      .withoutEnlargement()
-      .jpeg({
-        progressive: true,
-        quality: 80
-      }),
-
       key: function (req, file, cb) {
         cb(null, file.originalname)
       },
 
     })
-  }).any()
-} 
+  }).any() 
+}
 
 const remove = (key) => {
   s3.deleteObject({
