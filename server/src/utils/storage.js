@@ -1,6 +1,6 @@
 const AWS = require( 'aws-sdk' );
 const multer = require('multer');
-const multerS3 = require('multer-s3');
+const multerS3 = require('multer-s3-transform');
 const sharp = require('sharp');
 
 AWS.config.update({
@@ -26,7 +26,6 @@ const upload = function(width, height) {
       },
 
       transforms: [{
-        id: 'original',
         transform: function(req, file, cb) {
           //Perform desired transformations
           cb(
