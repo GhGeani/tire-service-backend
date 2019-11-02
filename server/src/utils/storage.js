@@ -1,6 +1,6 @@
 const AWS = require( 'aws-sdk' );
 const multer = require('multer');
-const multerS3 = require('multer-s3-transform');
+const multerS3 = require('multer-s3-with-transforms');
 const sharp = require('sharp');
 
 AWS.config.update({
@@ -15,27 +15,18 @@ const upload = function(width, height) {
     storage: multerS3({
       s3: s3,
       bucket: process.env.S3_BUCKET_NAME,
-      contentType: multerS3.AUTO_CONTENT_TYPE,
+      transforms: () => sharp().resize(width, height)
+      .max()
+      .withoutEnlargement()
+      .jpeg({
+        progressive: true,
+        quality: 80
+      }),
 
-      shouldTransform: function(req, file, cb) {
-        cb(null, /^image/i.test(file.mimetype));
+      key: function (req, file, cb) {
+        cb(null, file.originalname)
       },
 
-      transforms: [{
-
-        key: function (req, file, cb) {
-          cb(null, file.originalname)
-        },
-
-        transform: function(req, file, cb) {
-          cb(
-            null,
-            sharp()
-              .resize(width, height)
-              .max()
-          );
-        }
-      }],
     })
   }).any()
 } 
