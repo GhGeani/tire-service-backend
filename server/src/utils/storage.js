@@ -10,7 +10,7 @@ cloudinary.config({
 
 
 const upload =  (width, height) => {
-  return multer({storage: getStorage(width. height)});
+  return multer({storage: getStorage(width, height)}).any();
 }
 
 function getStorage(width, height) {
