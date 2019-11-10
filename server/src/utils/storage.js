@@ -3,9 +3,9 @@ const cloudinaryStorage = require('multer-storage-cloudinary');
 const multer = require('multer');
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME || 'demsdreams',
-  api_key: process.env.API_KEY || '117631267167635',
-  api_secret: process.env.API_SECRET || 'c3b7QHsGzMpelRX3vd48-AF8Fxw'
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
 })
 
 const storage = cloudinaryStorage({
@@ -19,7 +19,8 @@ const storage = cloudinaryStorage({
 const upload =  multer({ storage }).any() 
 
 const remove = (key) => {
-  return cloudinary.uploader.destroy(key, function(result) { console.log(result) });
+  console.log(cloudinary);
+  // return cloudinary.uploader.destroy(key, function(error) { console.log(errors) });
 };
 
 
