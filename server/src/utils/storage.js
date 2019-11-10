@@ -8,19 +8,15 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 })
 
-const storage = cloudinaryStorage({
-  cloudinary,
-  folder: 'tireshop',
-  filename: function (req, file, cb) {
-    cb(undefined, file.originalname);
-  }
-});
 
-const upload =  multer({ storage }).any() 
+const upload =  (file) => {
+  console.log(file)
+  return cloudinary.uploader.upload(file.originalname, function(error, result) {console.log(result, error)});
+}
 
 const remove = (key) => {
   console.log(cloudinary);
-  // return cloudinary.uploader.destroy(key, function(error) { console.log(errors) });
+  return cloudinary.uploader.destroy(key, function(error) { console.log(errors) });
 };
 
 
