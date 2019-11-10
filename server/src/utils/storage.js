@@ -11,7 +11,7 @@ cloudinary.config({
 
 const upload =  (file) => {
   console.log(file)
-  return cloudinary.uploader.upload(file.originalname, function(error, result) {console.log(result, error)});
+  return cloudinary.uploader.upload(file, function(error, result) {console.log(result, error)});
 }
 
 const remove = (key) => {
