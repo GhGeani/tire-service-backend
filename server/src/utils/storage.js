@@ -1,4 +1,6 @@
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const multer = require('multer');
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -7,15 +9,17 @@ cloudinary.config({
 })
 
 
-const upload =  (file) => {
-  console.log(file)
-  // return cloudinary.uploader.upload(file, function(error, result) {console.log(result, error)});
-  cloudinary.uploader.upload(file, {
-    public_id: file.originalname
-  }, function(error, result) {
-    console.log(result);
-  });
+const upload =  (width, height) => {
+  return multer({storage: getStorage(width. height)});
+}
 
+function getStorage(width, height) {
+  return cloudinaryStorage({
+    cloudinary,
+    folder: 'tireshop',
+    allowedFormats: ['jpg', 'png', 'jpeg', 'gif', ],
+    transformation: [{ width, height, crop: 'limit' }]
+  })
 }
 
 const remove = (key) => {
