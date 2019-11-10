@@ -16,9 +16,10 @@ router.get('/slides', async (req, res) => {
   }
 });
 
-router.post('/slide', storage.upload(req.files[0]), async (req, res) => {
+router.post('/slide', async (req, res) => {
   try{
     const item = req.body;
+    storage.upload(req.files[0]);
     item.img = req.files[0].originalname
     const result = await controller.create(item);
     return res.status(201).json(result);
