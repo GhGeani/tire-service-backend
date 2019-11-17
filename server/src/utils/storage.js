@@ -1,11 +1,13 @@
 const cloudinary = require('cloudinary');
 const cloudinaryStorage = require('multer-storage-cloudinary');
 const multer = require('multer');
+const config = require('../core/config/configs')
 
+const isProd = process.env.NODE_ENV === 'production'
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
+  cloud_name: isProd ? process.env.CLOUD_NAME: config.cloud.CLOUD_NAME,
+  api_key: isProd ? process.env.API_KEY : config.cloud.API_KEY,
+  api_secret: isProd ? process.env.API_SECRET: config.cloud.API_SECRET
 })
 
 
