@@ -18,7 +18,7 @@ const upload =  (width, height) => {
 function getStorage(width, height) {
   return cloudinaryStorage({
     cloudinary,
-    folder: 'tireshop',
+    folder: isProd ? process.env.CLOUD_FOLDER : config.cloud.CLOUD_FOLDER,
     allowedFormats: ['jpg', 'png', 'jpeg', 'gif', ],
     transformation: [{ width, height, crop: 'limit' }]
   })
