@@ -20,13 +20,15 @@ function getStorage(width, height) {
     cloudinary,
     folder: isProd ? process.env.CLOUD_FOLDER : config.cloud.CLOUD_FOLDER,
     allowedFormats: ['jpg', 'png', 'jpeg', 'gif', ],
-    transformation: [{ width, height, crop: 'limit' }]
+    transformation: [{ width, height, crop: 'limit' }],
+    filename: function (req, file, cb) {
+      cb(undefined, file.originalname);
+    }
   })
 }
 
 const remove = (key) => {
-  console.log(cloudinary);
-  cloudinary.uploader.destroy(key, function(error) { console.log(errors) });
+  cloudinary.uploader.destroy(key, function(error) { console.log(error) });
 };
 
 

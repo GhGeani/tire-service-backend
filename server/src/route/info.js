@@ -25,7 +25,7 @@ router.get('/info/:id', async (req, res) => {
   }
 });
 
-router.post('/info', storage.upload(300, 500), async (req, res) => {
+router.post('/info', storage.upload(297, 200), async (req, res) => {
   try{
     let service = req.body;
     if(req.files) {
